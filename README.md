@@ -77,6 +77,35 @@ Works across multiple tabs without refresh.
 - RLS policies enforced in database
 - Protected API routes
 
+## Challenges Faced & Solutions
+
+### 1\. Google Authentication Setup
+
+Setting up authentication with Google took significant time because it required configuring OAuth credentials, callback URLs, environment variables, and session handling correctly. Initially authentication failed due to mismatched redirect URLs and missing environment variables. I resolved this by carefully aligning the provider console settings with my app configuration and verifying each variable step by step.
+
+### 2\. Real-Time Updates Across Tabs
+
+Synchronizing bookmark changes across multiple tabs was another complex issue. Insert events worked immediately, but delete events did not reflect. The problem turned out to be related to database permissions and realtime subscription configuration. After enabling realtime for delete events and correcting query conditions, updates started syncing correctly across tabs.
+
+### 3\. API Route Type Errors
+
+During deployment, build errors occurred because the API route handlers did not match the framework’s expected type signatures. The fix was updating route function parameters to use the correct request and context types and adjusting how dynamic route params were accessed.
+
+### 4\. Database Query Issues
+
+At one point delete queries failed even though records existed. The cause was using double quotes instead of single quotes in SQL conditions. Correcting the syntax fixed the issue instantly.
+
+## What I Learned
+
+- Authentication systems require precise configuration and patience.
+- Real-time systems depend heavily on backend permissions and event subscriptions.
+- Strict typing helps catch mistakes early but requires exact handler signatures.
+- Small syntax mistakes in SQL can completely block queries.
+
+## Final Result
+
+Despite multiple roadblocks, I successfully implemented authentication, real-time syncing, CRUD operations, and deployment. The most time-consuming parts were Google authentication setup and syncing data across tabs, but I managed to resolve them all through debugging, documentation, and iterative testing.
+
 ## Local Setup
 
 ### 1\. Clone repo
