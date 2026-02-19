@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📌 Bookmark Manager — Assignment Project
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This is a full-stack bookmark manager built with modern web technologies. Users can sign in with Google, save bookmarks, view them instantly across tabs, and delete them. Each user only sees their own bookmarks.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Google OAuth login only (no email/password)
+- Add bookmarks (title + URL)
+- Private user data isolation
+- Real-time updates across tabs
+- Delete bookmarks
+- Responsive UI with micro-interactions
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Frontend:** Next.js (App Router), React, TailwindCSS, Motion
+- **Backend:** API Routes (Next.js server handlers)
+- **Auth & DB:** Supabase
+- **HTTP Client:** Axios
+- **Realtime:** Supabase Realtime subscriptions
 
-## Learn More
+## Authentication Flow
 
-To learn more about Next.js, take a look at the following resources:
+1.  User clicks login
+2.  Redirects to Google OAuth
+3.  Supabase handles authentication
+4.  Session cookies are stored securely
+5.  Server routes verify user identity via session
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Database Schema
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### bookmarks table
 
-## Deploy on Vercel
+columntypeiduuiduser_iduuidtitletexturltextcreated_attimestamp
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Row Level Security (RLS) ensures users only access their own data.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## API Routes
+
+### Create Bookmark
+
+POST /api/bookmark
+
+Body:
+
+Plain `   { "title": "Example", "url": "https://example.com" }   `
+
+### Get Bookmarks
+
+GET /api/bookmark
+
+Returns only logged-in user’s bookmarks sorted newest first.
+
+### Delete Bookmark
+
+DELETE /api/bookmark/\[id\]
+
+Deletes bookmark only if it belongs to the current user.
+
+## Realtime Updates
+
+The dashboard subscribes to database changes:
+
+- INSERT → adds new bookmark instantly
+- DELETE → removes bookmark instantly
+- UPDATE → updates UI instantly
+
+Works across multiple tabs without refresh.
+
+## Security
+
+- OAuth only authentication
+- Server-side session validation
+- User ID never trusted from client
+- RLS policies enforced in database
+- Protected API routes
+
+## Local Setup
+
+### 1\. Clone repo
+
+Plain `   git clone   cd project   `
+
+### 2\. Install deps
+
+Plain `   npm install   `
+
+### 3\. Environment variables
+
+Create .env.local
+
+Plain `   NEXT_PUBLIC_SUPABASE_URL=your_url  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your_key   `
+
+### 4\. Run project
+
+Plain `   npm run dev   `
+
+## Design Notes
+
+- UI optimized for mobile → tablet → desktop
+- Smooth entry animations
+- Feedback toasts for actions
+- Clean card layout for bookmarks
+
+## Assignment Requirements Checklist
+
+RequirementStatusGoogle login only✅Add bookmarks✅Private data✅Realtime updates✅Delete bookmarks✅
+
+## Future Improvements
+
+- Edit bookmarks
+- Folder organization
+- Search + filter
+- Drag and drop sorting
+- Public share links
+
+## Author
+
+Built as part of a full-stack assignment project.
