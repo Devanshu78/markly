@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import GoogleIcon from "@/components/icons/GoogleIcon";
 import { supabaseBrowser } from "@/lib/supabase/client";
 import AddIcon from "@/components/icons/AddIcon";
+import AnimatedHeadline from "@/components/AnimatedHeadline";
 
 const headline = "Save your links. Access anywhere.";
 
@@ -34,31 +35,7 @@ export default function HomePage() {
   return (
     <main className="flex items-center justify-center flex-1">
       <section className="text-center max-w-3xl">
-        <h1
-          className="
-            text-3xl md:text-5xl tracking-tight
-            font-bold
-            leading-tight text-gray-800
-          "
-        >
-          {headline.split("").map((char, i) => (
-            <motion.span
-              key={i}
-              initial={{ y: 80, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{
-                delay: i * 0.03,
-                type: "spring",
-                stiffness: 400,
-                damping: 18,
-              }}
-              className="inline-block"
-            >
-              {char === " " ? "\u00A0" : char}
-            </motion.span>
-          ))}
-        </h1>
-
+        <AnimatedHeadline text={headline} />
         <motion.p
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
