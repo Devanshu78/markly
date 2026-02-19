@@ -32,7 +32,7 @@ export async function POST(req: Request) {
   return NextResponse.json({ success: true });
 }
 
-export async function GET(req: Request, res: Response) {
+export async function GET(reqest: Request) {
   const supabase = await supabaseServer();
 
   const {

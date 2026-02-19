@@ -3,15 +3,15 @@ import { supabaseServer, getUser } from "@/lib/supabase/server";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } },
+  context: { params: Promise<{ id: string }> },
 ) {
+  const { id } = await context.params;
   const user = await getUser();
 
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { id } = await params;
   const supabase = await supabaseServer();
 
   const { error } = await supabase
